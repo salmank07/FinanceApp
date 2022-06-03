@@ -1,0 +1,41 @@
+<ion-content [fullscreen]='true' padding>
+
+
+  <div class='login-card'>
+    <!-- <div class='card'> 
+      <h1>hello</h1>
+    </div> -->
+
+    <img slot='start' src='../../../assets/icon/favicon.png' />
+    
+
+    <form (ngSubmit)='doLogin()' [formGroup]='loginForm' padding>
+
+      <ion-input required type='text' placeholder='Username' name='username' formControlName='userName'>
+        <ion-icon name='person-outline'></ion-icon>
+      </ion-input>
+
+      <ion-input style="margin-top: 1rem" required type='password' placeholder='Password' name='username'
+        formControlName='userName'>
+        <ion-icon name='desktop-outline'></ion-icon>
+      </ion-input>
+      <div style="margin-top: 1rem; float:right">
+        <ion-button type="submit">Login</ion-button>
+      </div>
+
+      <!-- <ion-item class='ion-margin-top'>
+        <ion-icon name='desktop-outline'></ion-icon>
+        <ion-input required type='text'  placeholder='WorkStation' formControlName='workStation'>
+          <ion-select-option value='{{ws}}' *ngFor='let ws of workStations'>{{ws}}</ion-select-option>
+        </ion-input>
+      </ion-item> -->
+
+      <!-- <div class='ion-padding-top'>
+        <ion-button expand='block' type='submit' class='ion-no-margin'>Login</ion-button>
+      </div> -->
+
+    </form>
+  </div>
+
+
+</ion-content>
