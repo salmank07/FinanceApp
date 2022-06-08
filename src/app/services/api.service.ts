@@ -9,25 +9,75 @@ import { User } from '../entities/topglove.model';
 })
 export class ApiService {
 
-  private ProductQualityApi = 'quality/v1';
-  private UserApi = 'user/v1';
+  private ProductQualityApi = '';
+  private ProductApi = 'Product';
+  private FileApi = 'Fileupload';
+  private CustomerApi = 'Customer';
 
   constructor(private http: HttpClient) {
 
   }
 
+  getCustomerApiUrl = (endpoint: string) => {
+    return `${environment.baseURL}/${this.CustomerApi}/${endpoint}`;
+  }
+
   getProductApiUrl = (endpoint: string) => {
     return `${environment.baseURL}/${this.ProductQualityApi}/${endpoint}`;
   }
+  FileApiUrl = (endpoint: string) => {
+    return `${environment.baseURL}/${this.FileApi}/${endpoint}`;
+  }
+
+
+  // getProductApi = (endpoint: string) => {
+  //   return `${environment.baseURL}/${this.ProductApi}/${endpoint}`;
+  // }
 
   getUserApiUrl = (endpoint: string) => {
-    return `${environment.baseURL}/${this.UserApi}/${endpoint}`;
+    return `${environment.baseURL}/${this.ProductApi}/${endpoint}`;
   }
+
+  getProductDetails() {
+    const url = this.getUserApiUrl('Allproducts')
+    return this.http.get(url);
+  }
+
+  getCustomerDetails() {
+    const url = this.getCustomerApiUrl('AllCustomers')
+    return this.http.get(url);
+  }
+
+  insertEntity = (params: any): Observable<any> => {
+    const url = this.getUserApiUrl('AddNewProduct');
+    return this.http.post(url, params);
+  }
+
+  insertProduct = (params: any): Observable<any> => {
+    const url = this.getUserApiUrl('AddNewProduct');
+    return this.http.post(url, params);
+  }
+
+  fileUpload = (params: any) : Observable<any> => {
+    const url = this.FileApiUrl('Upload');
+    return this.http.post(url, params);
+  }
+
+
+
+
 
   doLogin = (params: any): Observable<any> => {
     const url = this.getUserApiUrl('login');
     return this.http.post(url, params);
   }
+
+
+  insertCustomer = (params: any): Observable<any> => {
+    const url = this.getCustomerApiUrl('AddNewCustomer');
+    return this.http.post(url, params);
+  }
+
 
   logout = () => {
     localStorage.removeItem('userId');
@@ -35,10 +85,10 @@ export class ApiService {
     localStorage.removeItem('workStation');
   }
 
-  insertEntity = (params: any): Observable<any> => {
-    const url = this.getProductApiUrl('AddQualityDetail');
-    return this.http.post(url, params);
-  }
+  // insertEntity = (params: any): Observable<any> => {
+  //   const url = this.getProductApiUrl('AddNewProduct');
+  //   return this.http.post(url, params);
+  // }
 
   updateEntity = (params: any): Observable<any> => {
     const url = this.getProductApiUrl('Update');

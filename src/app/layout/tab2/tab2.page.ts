@@ -25,7 +25,15 @@ export class Tab2Page {
     private toast: NotificationService,
     private loadingService: LoadingService,
     private userService: UserService) {
+    this.generateDetails();
   }
+  _data: any
 
+  generateDetails() {
+    this.apiService.getCustomerDetails().subscribe(data => {
+      this._data = data;
+      console.log(this._data);
+    })
+  }
 
 }

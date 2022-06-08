@@ -6,7 +6,7 @@ import { Tab3Page } from './tab3.page';
 import { ChartsModule } from 'ng2-charts';
 
 import { Tab3PageRoutingModule } from './tab3-routing.module';
-import { AvatarModule } from 'ngx-avatar';
+
 
 const avatarColors = ['#16438b'];
 
@@ -16,8 +16,6 @@ const avatarColors = ['#16438b'];
     CommonModule,
     FormsModule,
     Tab3PageRoutingModule,
-    AvatarModule,
-    AvatarModule.forRoot({ colors: avatarColors }),
     ReactiveFormsModule,
     ChartsModule
   ],
