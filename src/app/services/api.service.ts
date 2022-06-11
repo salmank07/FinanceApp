@@ -48,6 +48,45 @@ export class ApiService {
     return this.http.get(url);
   }
 
+  updateApi = (params: any): Observable<any> => {
+    const url = this.getUserApiUrl('UpdateProduct');
+    return this.http.put(url, params);
+  }
+
+
+
+  updateCustomer = (params: any): Observable<any> => {
+    const url = this.getCustomerApiUrl('UpdateCustomer');
+    return this.http.put(url, params);
+  }
+  deleteCustomer = (params: number): Observable<any> => {
+    const url = this.getCustomerApiUrl('DeleteCustomer?customerId=');
+    return this.http.delete(url + params);
+  }
+
+
+
+  updateProduct = (params: any): Observable<any> => {
+    const url = this.getUserApiUrl('UpdateProduct');
+    return this.http.put(url, params);
+  } 
+  deleteProduct = (params: number): Observable<any> => {
+    const url = this.getUserApiUrl('DeleteProduct?productId=');
+    return this.http.delete(url + params);
+  }
+
+
+
+
+
+
+
+  updatecustomer = (params: any): Observable<any> => {
+    const url = this.getCustomerApiUrl('UpdateCustomer');
+    return this.http.put(url, params);
+  }
+
+
   insertEntity = (params: any): Observable<any> => {
     const url = this.getUserApiUrl('AddNewProduct');
     return this.http.post(url, params);

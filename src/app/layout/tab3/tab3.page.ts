@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { NotificationService } from '../../services/notification.service';
@@ -18,7 +18,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page {
+export class Tab3Page implements OnInit {
 
 
 
@@ -33,6 +33,17 @@ export class Tab3Page {
 
 
   }
+  _data: any;
+  attachmentId: string;
+  form:any;
+
+  ngOnInit(): void {
+    console.log('geetha')
+    this.apiService.getCustomerDetails().subscribe(data => {
+      this._data = data;
+      console.log(this._data, 'geetha');
+    })
+  }
 
 
 
@@ -40,16 +51,16 @@ export class Tab3Page {
 
   generateLoginForm = () => {
     this.loginForm = this.fb.group({
-      customerName: ['', Validators.required],
-      guarantorName: ['', Validators.required],
-      address: ['', Validators.required],
-      mobileNumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      aadharNumber: ['', Validators.required],
-      referredBy: ['', Validators.required],
-      fileUpload: [''],
-      createdBy: ['', Validators.required],
+      customerName: ['',Validators.required ],
+      guarantorName: ['',],
+      address: ['', ],
+      mobileNumber: ['', ],
+      aadharNumber: ['', ],
+      referredBy: ['', ],
+      attachmentId: [''],
+      createdBy: ['', ],
       dateOfCreated: [moment().format()],
-      modifiedBy: ['', Validators.required],
+      modifiedBy: ['', ],
       dateOfModified: [moment().format()]
     });
   }
@@ -62,32 +73,40 @@ export class Tab3Page {
     }
   }
   save() {
-    console.log(this.loginForm.value, 'form values')
-    this.apiService.insertCustomer(this.loginForm.value).subscribe(data => {
-      console.log(data);
+        this.apiService.insertCustomer(this.loginForm.value).subscribe(data => {
+      data.AttachmentIds = this.attachmentId;
+      console.log(this.attachmentId, 'this.attachmentIds');
+      console.log(data, 'customer');
       this.notificationService.success('Customer details saved successfully')
     });
 
   }
   validateNumber(e) {
-    const keyCode = e.keyCode;  
-		if (( (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) && e.keyCode !=8) {
-			e.preventDefault();
+    const keyCode = e.keyCode;
+    if (((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) && e.keyCode != 8) {
+      e.preventDefault();
     }
   }
 
   uploadcandidateFile = (fileChangeEvent: any) => {
-    console.log(fileChangeEvent,'geetha')
+    console.log(fileChangeEvent, 'geetha')
     const photo = fileChangeEvent.target.files[0];
-    console.log(photo,'geetha')
+    console.log(photo, 'geetha')
 
     const formData = new FormData();
-    console.log(formData,'geetha')
+    console.log(formData, 'geetha')
 
     formData.append('file', photo);
-    this.apiService.fileUpload(formData).subscribe((file:any)=>{
+    this.apiService.fileUpload(formData).subscribe((file: any) => {
       console.log(file, 'file')
-
+      // this.attachmentIds.push(file.attachmentId);
+      this.attachmentId = file.AttachmentIds;
+      console.log(this.attachmentId, 'this.attachmentId')
+      file.attachmentName;
+      file.attachmentPath;
+      console.log(file.attachmentId, 'file.attachmentId')
+      console.log(file.attachmentName, 'this.attachmentId')
+      console.log(file.attachmentPath, 'this.attachmentId')
     });
 
   }
