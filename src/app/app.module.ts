@@ -26,7 +26,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-
     ServiceWorkerModule.register('./ngsw-worker.js', {
       enabled: environment.production,
       registrationStrategy: 'registerImmediately'

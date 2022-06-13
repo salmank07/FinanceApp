@@ -1,10 +1,8 @@
-
-.tables{
-  padding:1.5rem;
-  
+.tables {
+  padding: 1.5rem;
 }
-ion-card{
- padding: 1rem;
+ion-card {
+  padding: 1rem;
   // width: 400px;
   background-color: #f7f7f7;
   margin: auto;
@@ -13,5 +11,13 @@ ion-card{
   overflow: hidden;
   position: relative;
   margin-top: 1rem;
-  text-align: center
+  text-align: center;
+}
+ion-card {
+  --background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }

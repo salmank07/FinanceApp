@@ -13,6 +13,7 @@ export class ApiService {
   private ProductApi = 'Product';
   private FileApi = 'Fileupload';
   private CustomerApi = 'Customer';
+  private user = 'Login'
 
   constructor(private http: HttpClient) {
 
@@ -35,7 +36,7 @@ export class ApiService {
   // }
 
   getUserApiUrl = (endpoint: string) => {
-    return `${environment.baseURL}/${this.ProductApi}/${endpoint}`;
+    return `${environment.baseURL}/${this.user}/${endpoint}`;
   }
 
   getProductDetails() {
@@ -107,7 +108,7 @@ export class ApiService {
 
 
   doLogin = (params: any): Observable<any> => {
-    const url = this.getUserApiUrl('login');
+    const url = this.getUserApiUrl('GetLogin');
     return this.http.post(url, params);
   }
 

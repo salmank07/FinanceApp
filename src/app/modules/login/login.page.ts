@@ -6,7 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { WorkStations } from 'src/app/entities/topglove.domain.model';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ApiService } from 'src/app/services/api.service';
-import { User } from 'src/app/entities/topglove.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +16,7 @@ import { User } from 'src/app/entities/topglove.model';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
+
   workStations: Array<string> = WorkStations.data;
 
   constructor(private router: Router,
@@ -32,43 +33,34 @@ export class LoginPage implements OnInit {
 
   generateLoginForm = () => {
     this.loginForm = this.fb.group({
-      userName: ['', Validators.required],
-      workStation: ['', Validators.required]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
-  doLogin = () => {
-    if (this.loginForm.dirty && this.loginForm.valid) {
-      const user: string = this.loginForm.value.userName.toLowerCase();
-      const workStation: string = this.loginForm.value.workStation.toLowerCase();
-
-      // this.userService.WorkStation = workStation;
-      // this.userService.User = user;
-      // this.userService.IsSuperUser = false;
-      // this.router.navigate(['/tabs'], { replaceUrl: true });
-
-      this.loadingService.show();
-      this.apiService.doLogin({ userId: user }).subscribe((res: User | null) => {
-        this.loadingService.hide();
-        if (res) {
-          this.userService.User = res.userId;
-          this.userService.WorkStation = workStation;
-          if (res.isSuperUser) {
-            this.userService.IsSuperUser = true;
-            this.router.navigate(['/tabs/tab3'], { replaceUrl: true });
-          }
-          else {
-            this.userService.IsSuperUser = false;
-            this.router.navigate(['/tabs'], { replaceUrl: true });
-          }
-        } else {
-          this.toast.error('Please enter valid username');
+  doLogin() {
+    this.apiService.doLogin(this.loginForm.value).subscribe((data) => {
+      if (data) {
+        console.log(data);
+        this.userService.User = data.userName;
+        if (data.role == "operator") {
+          this.userService.IsSuperUser = false;
+          this.loadingService.hide();
+          this.router.navigate(['/tabs/tab1'], { replaceUrl: true });
         }
-      }, (error: any) => {
+        else {
+          this.userService.IsSuperUser = true;
+          this.loadingService.hide();
+          this.router.navigate(['/tabs/tab2'], { replaceUrl: true });
+        }
+      } else {
+        this.toast.error('Please enter valid username');
+      }
+    },
+      (error: any) => {
         console.log(error);
         this.loadingService.hide();
         this.toast.error('Unable to validate user. Please try agian after sometime.');
       });
     }
   }
-}
