@@ -16,34 +16,40 @@ import { FormBuilder, FormGroup, PatternValidator, Validators } from '@angular/f
 export class Tab4Page {
 
 
-
+  ProductIdValue:any;
+  
   constructor(private toast: NotificationService,
     private loadingService: LoadingService,
     private apiService: ApiService,
+    private router: Router,
     public userService: UserService,
     public fb: FormBuilder,
     public notificationService: NotificationService
   ) {
     this.generateLoginForm();
+
   }
 
   productForm: FormGroup;
+  gotid:any;
 
   generateLoginForm = () => {
     this.productForm = this.fb.group({
       //productId:[''],
       productName: ['', Validators.required],
-      productType: ['', Validators.required],
-      productTenure: ['', Validators.required],
-      numberOfCustomers: ['', Validators.required],
-      productDescription: ['', Validators.required],
-      createdBy: ['', Validators.required],
-      dateOfCreated: [moment().format()],
-      modifiedBy: ['', Validators.required],
-      dateOfModified: [moment().format()]
+      // productType: ['', Validators.required],
+      // productTenure: ['', Validators.required],
+      // numberOfCustomers: ['', Validators.required],
+      // productDescription: ['', Validators.required],
+      // createdBy: ['', Validators.required],
+      // dateOfCreated: [moment().format()],
+      // modifiedBy: ['', Validators.required],
+      // dateOfModified: [moment().format()]
       //isActive: [null]
 
     });
+    this.gotid = this.userService.data
+
   }
 
   thisFormValid() {
@@ -57,7 +63,11 @@ export class Tab4Page {
     console.log(this.productForm.value, 'form values')
     this.apiService.insertProduct(this.productForm.value).subscribe(data => {
       console.log(data);
-      this.notificationService.success('Product details saved successfully')
+      this.productForm.reset();
+      this.notificationService.success('Product details saved successfully');
+      this.router.navigate(['/tabs/tab1']);
+
+
     });
     
   }

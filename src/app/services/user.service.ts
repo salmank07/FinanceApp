@@ -8,6 +8,7 @@ export class UserService {
   private _user: string = null;
   private _isSuperUser: boolean = false;
   private _workStation: string = null;
+  private _isProductId: any = null;
 
   constructor() {
     this.load();
@@ -67,5 +68,13 @@ export class UserService {
   set WorkStation(workStation: string) {
     localStorage.setItem('workStation', workStation);
     this._workStation = workStation;
+  }
+
+  set data(value: any) {
+    this._isProductId = value;
+  }
+
+  get data(): any {
+    return this._isProductId;
   }
 }

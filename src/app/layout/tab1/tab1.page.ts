@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NotificationService } from '../../services/notification.service';
 import { LoadingService } from '../../services/loading.service';
 import { ApiService } from '../../services/api.service';
@@ -14,6 +14,12 @@ import * as moment from 'moment';
 })
 export class Tab1Page implements OnInit {
 
+  @Input() set ProductIdValue(value: any) {
+    console.log(value, 'value')
+    this.productId = value;
+    console.log(this.productId, 'value')
+
+  }
 
   productDetails: any;
 
@@ -27,6 +33,7 @@ export class Tab1Page implements OnInit {
     this.generateDetails();
   }
 
+  productId: any;
 
   isDisabled: boolean = true;
 
@@ -57,11 +64,15 @@ export class Tab1Page implements OnInit {
       console.log(this.productDetails, 'data')
     })
   }
-  onClickAdd() {
-    this.router.navigate(['/tabs/tab4']);
+  onClickAdd(params: any) {
+
+
+
+    // console.log(this.userService, "hello")
+    this.router.navigate(['/tabs/tab3']);
+    // this.userService.data(this.productId);
   }
   updateProduct() {
-
     this.apiService.updateProduct(this.updateForm.value).subscribe(data => {
       console.log(data);
       this.isDisabled = false;
