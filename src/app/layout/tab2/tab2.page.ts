@@ -5,7 +5,7 @@ import { ApiService } from '../../services/api.service';
 import { NotificationService } from '../../services/notification.service';
 import { LoadingService } from '../../services/loading.service';
 import { UserService } from 'src/app/services/user.service';
-import { FormBuilder, FormControl, FormControlName, FormGroup,Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
 @Component({
@@ -26,13 +26,13 @@ export class Tab2Page {
     this.generateDetails();
   }
   _data: any
- 
-  isDisabled: boolean=true;
+
+  isDisabled: boolean = true;
 
   generateDetails() {
 
-    this.updateForm= this.fb.group({
-      customerId:[''],
+    this.updateForm = this.fb.group({
+      customerId: [''],
       customerName: ['', Validators.required],
       guarantorName: ['', Validators.required],
       address: ['', Validators.required],
@@ -55,13 +55,14 @@ export class Tab2Page {
   }
 
 
-updateForm:FormGroup
+  updateForm: FormGroup
 
   updateCustomer() {
-    
+
     this.apiService.updateCustomer(this.updateForm.value).subscribe(data => {
       console.log(data);
-      this.isDisabled=true;
+      this.isDisabled = true;
+
     });
   }
   deleteCustomer(params: any) {
@@ -71,9 +72,9 @@ updateForm:FormGroup
     });
   }
   validateNumber(e) {
-    const keyCode = e.keyCode;  
-		if (( (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) && e.keyCode !=8) {
-			e.preventDefault();
+    const keyCode = e.keyCode;
+    if (((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) && e.keyCode != 8) {
+      e.preventDefault();
     }
   }
   // thisFormValid() {
@@ -83,20 +84,20 @@ updateForm:FormGroup
   //     return false
   //   }
   // }
-  changeStatus(){
+  changeStatus() {
     this.isDisabled = !(this.isDisabled);
   }
-  
+
   uploadcandidateFile = (fileChangeEvent: any) => {
-    console.log(fileChangeEvent,'geetha')
+    console.log(fileChangeEvent, 'geetha')
     const photo = fileChangeEvent.target.files[0];
-    console.log(photo,'geetha')
+    console.log(photo, 'geetha')
 
     const formData = new FormData();
-    console.log(formData,'geetha')
+    console.log(formData, 'geetha')
 
     formData.append('file', photo);
-    this.apiService.fileUpload(formData).subscribe((file:any)=>{
+    this.apiService.fileUpload(formData).subscribe((file: any) => {
       console.log(file, 'file')
 
     });

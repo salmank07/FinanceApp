@@ -34,8 +34,8 @@ export class Tab3Page implements OnInit {
 
   }
   _data: any;
-  attachmentId: string;
-  form:any;
+  attachmentId: any;
+  form: any;
 
   ngOnInit(): void {
     console.log('geetha')
@@ -51,17 +51,17 @@ export class Tab3Page implements OnInit {
 
   generateLoginForm = () => {
     this.loginForm = this.fb.group({
-      customerName: ['',Validators.required ],
-      guarantorName: ['',],
-      address: ['', ],
-      mobileNumber: ['', ],
-      aadharNumber: ['', ],
-      referredBy: ['', ],
-      attachmentId: [''],
-      createdBy: ['', ],
-      dateOfCreated: [moment().format()],
-      modifiedBy: ['', ],
-      dateOfModified: [moment().format()]
+      customerName: ['', Validators.required],
+      // guarantorName: ['',],
+      // address: ['', ],
+      // mobileNumber: ['', ],
+      // aadharNumber: ['', ],
+      // referredBy: ['', ],
+      // attachmentId: [''],
+      // createdBy: ['', ],
+      // dateOfCreated: [moment().format()],
+      // modifiedBy: ['', ],
+      // dateOfModified: [moment().format()]
     });
   }
 
@@ -72,10 +72,14 @@ export class Tab3Page implements OnInit {
       return false
     }
   }
-  save() {
-        this.apiService.insertCustomer(this.loginForm.value).subscribe(data => {
-      data.AttachmentIds = this.attachmentId;
-      console.log(this.attachmentId, 'this.attachmentIds');
+  save(datas: any) {
+    console.log(datas, 'customer');
+
+    datas.AttachmentIds = this.attachmentId.toString();
+    console.log(this.attachmentId, 'this.attachmentIds');
+    console.log(datas.AttachmentIds, 'datas.AttachmentIds');
+
+    this.apiService.insertCustomer(datas).subscribe(data => {
       console.log(data, 'customer');
       this.notificationService.success('Customer details saved successfully')
     });
@@ -98,9 +102,10 @@ export class Tab3Page implements OnInit {
 
     formData.append('file', photo);
     this.apiService.fileUpload(formData).subscribe((file: any) => {
+      this.attachmentId.push(file.attachmentId);
+
+
       console.log(file, 'file')
-      // this.attachmentIds.push(file.attachmentId);
-      this.attachmentId = file.AttachmentIds;
       console.log(this.attachmentId, 'this.attachmentId')
       file.attachmentName;
       file.attachmentPath;

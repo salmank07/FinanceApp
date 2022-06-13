@@ -1,6 +1,7 @@
 <ion-content class="ion-padding">
   <ion-grid>
-    <form (ngSubmit)='save()' [formGroup]="loginForm">
+    <form (ngSubmit)='save(loginForm.value)' [formGroup]="loginForm">
+     
       <ion-row>
         <ion-col>
           <ion-item lines="none">
@@ -11,7 +12,7 @@
         loginForm.controls['customerName']?.touched"> Name is required *</span>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <!-- <ion-row>
         <ion-col>
           <ion-item lines="none">
             <ion-label position="stacked">Guarantor Name</ion-label>
@@ -83,8 +84,7 @@
             <ion-label position="stacked">Created Date</ion-label>
             <ion-input type="text" formControlName="dateOfCreated" placeholder=""></ion-input>
           </ion-item>
-          <!-- <span class="text-danger" *ngIf="!loginForm.controls['dateOfCreated'].valid && 
-          loginForm.controls['dateOfCreated']?.touched"> Name is required *</span> -->
+         
         </ion-col>
       </ion-row>
       <ion-row>
@@ -102,6 +102,16 @@
             <ion-input type="text" formControlName="dateOfModified" placeholder=""></ion-input>
           </ion-item>
         </ion-col>
+      </ion-row> -->
+
+      <ion-row>
+        <ion-col>
+          <ion-item lines=none>
+            <ion-label position="stacked">File Upload</ion-label>
+            <ion-input type="file" formControlName="fileUpload" accept="application/pdf" (change)="uploadcandidateFile($event)" placeholder=""></ion-input>
+          </ion-item>
+        </ion-col>
+
       </ion-row>
       <ion-row>
         <ion-col>
